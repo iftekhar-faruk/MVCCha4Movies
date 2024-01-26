@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace MovieProject.Models
 {
@@ -17,6 +18,17 @@ namespace MovieProject.Models
         [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5")]
         public int? Rating { get; set; }
 
+        //Readonly property for the slug
+        public string Slug => Name?.Replace(' ', '-').ToLower() + '-' + Year?.ToString();
+
+        //Foreign Key Property
+        //Your entity classes are easier to work with if you add FK properties that refere to the PK in the related entity class.
+        [Required(ErrorMessage = "Please enter a genre")]
+        public string GenreId { get; set; } = string.Empty;
+
+        //Navigation Property
+        [ValidateNever]
+        public Genre Genre { get; set; } = null!;
 
     }
 }

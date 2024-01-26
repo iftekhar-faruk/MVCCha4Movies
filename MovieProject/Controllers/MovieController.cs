@@ -32,6 +32,7 @@ namespace MovieProject.Controllers
         public IActionResult Add()
         {
             ViewBag.Action = "Add New movie";
+            ViewBag.Genres = Context.Genres.OrderBy(g => g.Name).ToList();
             return View("Edit", new Movie());
         }
 
@@ -39,6 +40,7 @@ namespace MovieProject.Controllers
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit Movie";
+            ViewBag.Genres = Context.Genres.OrderBy(g => g.Name).ToList();
             //LINQ query to find the movie with the given id = PK search
             var movie = Context.Movies.Find(id);
             return View(movie);
@@ -65,6 +67,7 @@ namespace MovieProject.Controllers
             {
                 //Show our validation errors
                 ViewBag.Action = (movie.MovieId == 0) ? "Add" : "Edit";
+                ViewBag.Genres = Context.Genres.OrderBy(g => g.Name).ToList();
                 return View(movie);
             }
         }
